@@ -1,7 +1,11 @@
 # Module_Basics_2
 
+en la carpeta Module_Basics_2/Configure_Basic_infra
+
 echo "[jenkins_server]" > /etc/ansible/hosts
-terraform output public_ip >> /etc/ansible/hosts
+terraform output pub_ip >> /etc/ansible/hosts
+
+verificamos que este grabado
 
 aws secretsmanager get-secret-value --secret-id "EC2-key-4" --region "us-east-2" --query 'SecretString' --output text > key.pem
 chmod 400 key.pem
