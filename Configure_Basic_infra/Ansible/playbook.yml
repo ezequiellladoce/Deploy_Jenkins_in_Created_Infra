@@ -1,0 +1,7 @@
+- name: Jenkins deployment playbook
+  hosts: jenkins_server     # Inventory hosts group / server to act on
+  become: yes               # If to escalate privilege
+  become_method: sudo       # Set become method
+  remote_user: ubuntu         # Update username for remote server
+  roles:
+    - jenkins_server
