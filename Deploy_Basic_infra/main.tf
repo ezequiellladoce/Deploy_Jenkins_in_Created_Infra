@@ -38,5 +38,5 @@ module "ssh_keys" {
 
 module "igws" {
   source = "./modules/igw"
-  snet_id = module.module.subnets.snet_id
+  snet_id = module.subnets.snet_id
 }
