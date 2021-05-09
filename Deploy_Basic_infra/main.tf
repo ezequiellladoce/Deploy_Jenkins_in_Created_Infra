@@ -39,4 +39,5 @@ module "ssh_keys" {
 module "igws" {
   source = "./modules/igw"
   snet_id = module.subnets.snet_id
+  sg_vpc_id = module.vpcs.vpc_id
 }
