@@ -2,7 +2,6 @@ provider "aws" {
    region = "us-east-2"
 }
 
-
 terraform {
   backend "s3" {
     bucket = "backendbucket20210505"
@@ -35,4 +34,8 @@ module "sgs" {
 
 module "ssh_keys" {
   source = "./modules/ssh_key"
+}
+
+module "igws" {
+  source = "./modules/igw"
 }
