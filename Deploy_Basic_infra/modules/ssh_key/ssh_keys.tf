@@ -17,6 +17,6 @@ resource "aws_secretsmanager_secret" "ec2-secret-key-1" {
 }
 
 resource "aws_secretsmanager_secret_version" "secret_priv" {
-  secret_id     = aws_secretsmanager_secret.ec2-secret-key.id
+  secret_id     = aws_secretsmanager_secret.ec2-secret-key-1.id
   secret_string = tls_private_key.priv_key.private_key_pem
 }
