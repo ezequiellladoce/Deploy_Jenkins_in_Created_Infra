@@ -1,9 +1,9 @@
 variable "key_name" {
   description = "Name for the KEY"
-  default = "key_2"
+  default = "key_3"
 }
 
 variable "Secret_Key" {
   description = "Name for the AWS Secret Key"
-  default = "ec2-key-1"
+  default = "ec2-key-2"
 }
