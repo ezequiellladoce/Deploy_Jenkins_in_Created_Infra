@@ -8,7 +8,7 @@ resource "aws_key_pair" "generated_key" {
   public_key = tls_private_key.priv_key.public_key_openssh
 }
 
-resource "aws_secretsmanager_secret" "ec2-secret-key" {
+resource "aws_secretsmanager_secret" "ec2-secret-key-1" {
   name = var.Secret_Key
   description = "Name of the secret key"
   tags = {
