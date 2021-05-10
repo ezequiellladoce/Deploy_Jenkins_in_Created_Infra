@@ -14,7 +14,8 @@ module "ec2s" {
   source = "./modules/ec2"
   sn_id = module.subnets.snet_id
   sec_group = module.sgs.sg_id
-  ec2_key_name = module.ssh_keys.ssh_ec2_key
+  priv_key_nane = module.ssh_keys.ssh_ec2_key
+#  ec2_key_name = module.ssh_keys.ssh_ec2_key
 #  p_ip = module.ec2s.pub_ip
 }
 

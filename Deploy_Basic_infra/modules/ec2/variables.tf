@@ -10,7 +10,7 @@ variable "sec_group" {
   default =["null"]
 }
 
-variable "ec2_key_name" {}
+variable "priv_key_nane" {}
 
 variable "p_ip" {
   default = "null"

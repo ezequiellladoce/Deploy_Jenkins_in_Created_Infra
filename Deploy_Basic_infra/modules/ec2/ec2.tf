@@ -18,7 +18,7 @@ resource "aws_instance" "ec2" {
    associate_public_ip_address = true
    subnet_id                   = var.sn_id
    vpc_security_group_ids      = [var.sec_group]
-   key_name = var.ec2_key_name
+   key_name = var.priv_key_nane
    tags = {
          Name = "EC2_Instance"
    }
