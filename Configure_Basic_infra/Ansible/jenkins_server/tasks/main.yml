@@ -1,24 +1,31 @@
 ---
 # tasks file for jenkins
-- name: add jenkins key
-  apt_key:
-    state: present
-    url: "{{ jenkins_key_rpmU }}"
-- name: "Set EPEL yum repository"
-  apt_repository:
-      filename: "{{ item.value.name }}"
-      repo: "{{ item.value.url }}"
-      description: "{{ item.value.description }}"
-  loop:
-      "{{ lookup('dict',reposU) }}"
-- name: "Install Java and Jenkins"
+- name: Update and upgrade apt packages
+  become: true
   apt:
-      name: "{{ item.value.name }}"
-      state: present
-  loop:
-      "{{ lookup('dict',softwaresU) }}"
-- name: "Starting jenkins"
-  service:
-      name: "jenkins"
-      state: started
-      enabled: yes
+    upgrade: yes
+    update_cache: yes
+    cache_valid_time: 86400
+
+- name: Ensure the system can use the HTTPS transport for APT.
+  stat:
+    path: /usr/lib/apt/methods/https
+  register: apt_https_transport
+
+- name: Install APT HTTPS transport.
+  apt:
+    name: "apt-transport-https"
+    state: present
+    update_cache: yes
+  when: not apt_https_transport.stat.exists
+
+- name: Install basic packages
+  package:
+    name: ['vim','aptitude','bash-completion','tmux','tree','htop','wget','unzip','curl','git']
+    state: present
+    update_cache: yes
+
+- name: Install Default Java (Debian/Ubuntu)
+  apt:
+    name: default-jdk
+    state: present

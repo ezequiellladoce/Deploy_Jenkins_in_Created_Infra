@@ -12,3 +12,5 @@ chmod 400 key.pem
 cat key.pem
 
 ansible all -m ping -u ubuntu --key-file key.pem
+
+ansible-playbook Ansible/playbook.yml -u ubuntu --key-file key.pem
