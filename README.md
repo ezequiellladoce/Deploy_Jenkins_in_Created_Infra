@@ -14,3 +14,5 @@ cat key.pem
 ansible all -m ping -u ubuntu --key-file key.pem
 
 ansible-playbook Ansible/playbook.yml -u ubuntu --key-file key.pem
+
+/home/ubuntu/Module_Basics_2/Configure_Basic_infra# ansible-playbook Ansible/playbook.yml -u ubuntu --key-file key.pem
