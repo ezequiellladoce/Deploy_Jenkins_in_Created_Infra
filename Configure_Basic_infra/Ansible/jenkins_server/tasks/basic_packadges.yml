@@ -40,8 +40,6 @@
     repo: 'deb https://pkg.jenkins.io/debian-stable binary/'
     state: present
 
-
-
 - name: Install Jenkins binary package
   apt:
     name: "jenkins"
