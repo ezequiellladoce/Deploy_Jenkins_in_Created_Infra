@@ -1,0 +1,64 @@
+---
+# tasks file for jenkins
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+    cache_valid_time: 86400
+
+- name: Ensure the system can use the HTTPS transport for APT.
+  stat:
+    path: /usr/lib/apt/methods/https
+  register: apt_https_transport
+
+- name: Install APT HTTPS transport.
+  apt:
+    name: "apt-transport-https"
+    state: present
+    update_cache: yes
+  when: not apt_https_transport.stat.exists
+
+- name: Install basic packages
+  package:
+    name: ['vim','aptitude','bash-completion','tmux','tree','htop','wget','unzip','curl','git']
+    state: present
+    update_cache: yes
+
+- name: Install Default Java (Debian/Ubuntu)
+  apt:
+    name: default-jdk
+    state: present
+
+- name: Add Jenkins key
+  apt_key:
+    url: "https://pkg.jenkins.io/debian-stable/jenkins.io.key"
+    state: present
+
+- name: Add Jenkins repository
+  apt_repository:
+    repo: 'deb https://pkg.jenkins.io/debian-stable binary/'
+    state: present
+
+- name: Install Jenkins binary package
+  apt:
+    name: "jenkins"
+    update_cache: true
+
+- name: Jenkins is started
+  service:
+    name: jenkins
+    state: started
+
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu bionic stable
+    state: present
+
+- name: Update apt and install docker-ce
+  apt: update_cache=yes name=docker-ce state=latest
