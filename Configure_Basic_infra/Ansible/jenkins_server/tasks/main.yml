@@ -49,8 +49,7 @@
   service:
     name: jenkins
     state: started
-    changed_when: false
-
+  
 - name: Add Docker GPG apt Key
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
