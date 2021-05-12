@@ -1,5 +1,6 @@
 ---
 # tasks file for basic packages
+- name: Update and upgrade apt packages
   become: true
   apt:
     upgrade: yes
