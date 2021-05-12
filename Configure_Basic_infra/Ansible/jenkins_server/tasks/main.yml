@@ -1,6 +1,6 @@
 ---
 # main tasks
-- include_tasks: basic_packages
+- include_tasks: basic_packages.yml
 - include_tasks: jenkins.yml
 - include_tasks: docker.yml
 - include_tasks: terraform.yml
