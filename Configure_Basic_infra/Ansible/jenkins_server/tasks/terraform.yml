@@ -13,7 +13,7 @@
 - name: Install Terraform binary package
   apt:
     name: "terraform"
-    update_cache: true
+  #  update_cache: true
 
 - name: Jenkins is started
   service:
