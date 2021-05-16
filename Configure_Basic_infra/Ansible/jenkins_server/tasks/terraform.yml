@@ -6,14 +6,12 @@
     state: present
 
 - name: Add Terraform repository
-  apt_repository:
-    repo: deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main
-    state: present
-
+  shell: sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+  
 - name: Install Terraform binary package
   apt:
     name: "terraform"
-  #  update_cache: true
+    update_cache: true
 
 - name: Jenkins is started
   service:
