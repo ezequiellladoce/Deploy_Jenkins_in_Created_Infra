@@ -6,9 +6,9 @@
     state: present
 
 - name: Add Terraform repository
-  shell: sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-  args:
-    executable: /bin/bash
+  raw: sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+  become: True
+
 
 - name: Install Terraform binary package
   apt:
