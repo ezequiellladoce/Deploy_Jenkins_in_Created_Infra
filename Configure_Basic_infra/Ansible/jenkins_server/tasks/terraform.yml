@@ -1,21 +1,21 @@
 ---
-# tasks file for jenkins
+# tasks file for terraform
 - name: Add terraform key
   apt_key:
     url: "https://apt.releases.hashicorp.com/gpg"
     state: present
 
-- name: Add Terraform repository
-  raw: sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-  become: True
+#- name: Add Terraform repository
+#  raw: sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+#  become: True
 
 
-- name: Install Terraform binary package
-  apt:
-    name: "terraform"
-    update_cache: true
+#- name: Install Terraform binary package
+#  apt:
+#    name: "terraform"
+#    update_cache: true
 
-- name: Jenkins is started
-  service:
-    name: terraform
-    state: started
+#- name: Jenkins is started
+#  service:
+#    name: terraform
+#    state: started
