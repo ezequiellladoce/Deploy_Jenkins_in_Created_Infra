@@ -6,7 +6,6 @@ data "terraform_remote_state" "if_trs" {
   backend = "s3"
   config = {
       bucket = "backendbucket20210519"
-      key    = "tfbkcore/"
       key    = "data_front/"
       region = "us-east-2"
   }
