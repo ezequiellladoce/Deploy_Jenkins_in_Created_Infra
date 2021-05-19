@@ -11,6 +11,6 @@ data "terraform_remote_state" "bk_end" {
   }
 }
 
-output "pub_ip" {
+output "public_ip" {
   value = data.terraform_remote_state.bk_end.outputs.pub_ip
 }
