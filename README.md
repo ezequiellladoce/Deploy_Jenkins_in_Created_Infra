@@ -1,5 +1,6 @@
 # Module_Basics_2
 
+
 en la carpeta Module_Basics_2/Configure_Basic_infra
 
 echo "[jenkins_server]" > /etc/ansible/hosts
@@ -16,3 +17,5 @@ ansible all -m ping -u ubuntu --key-file key.pem
 ansible-playbook Ansible/playbook.yml -u ubuntu --key-file key.pem
 
 /home/ubuntu/Module_Basics_2/Configure_Basic_infra# ansible-playbook Ansible/playbook.yml -u ubuntu --key-file key.pem
+
+Falta instalar Ansible
