@@ -5,7 +5,7 @@ provider "aws" {
 data "terraform_remote_state" "bk_end" {
   backend = "s3"
   config = {
-      bucket = "backendbucket20210519""
+      bucket = "backendbucket20210519"
       key    = "data_front/"
       region = "us-east-2"
   }
