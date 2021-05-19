@@ -14,3 +14,11 @@ data "terraform_remote_state" "bk_end" {
 output "public_ip" {
   value = data.terraform_remote_state.bk_end.outputs.pub_ip
 }
+
+terraform {
+  backend "s3" {
+    bucket = "backendbucket20210519"
+    key    = "data_front/"
+    region = "us-east-2"
+  }
+}
