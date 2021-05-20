@@ -36,3 +36,11 @@ resource "aws_instance" "ec2" {
          Name = "EC2_Jenkins_Instance"
    }
 }
+
+terraform {
+  backend "s3" {
+    bucket = "backendbucket20210519"
+    key    = "data_front_2/"
+    region = "us-east-2"
+  }
+}
