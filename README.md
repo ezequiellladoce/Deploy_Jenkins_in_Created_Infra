@@ -1,29 +1,30 @@
-# Despliegue de Jenkins Sever en EC2 dentro de  Infraestructura usando Terrafom Modules, Terraform S3 backend y  AWS Secrets Manager y Ansible
+# Despliegue  Jenkins dentro de  Infraestructura Core usando Terrafom Modules, Terraform S3 backend y  AWS Secrets Manager y Ansible
 
-En este repositorio veremos  como desplegar automatizar y securizar el despliegue de una infraestructura core (VPC - Security Groups - Internet Gateway - Subnet - Route Table) mediante  modulos Terrafom y crearemos en su interior un Servidor Jenkins. Este sera creado con los parametros almacenados en terraform S3 backend y configurado mendiante Ansible.
+En este repositorio veremos  como desplegar automatizar y securizar el despliegue de una infraestructura core (VPC - Security Groups - Internet Gateway - Subnet - Route Table) mediante  módulos Terrafom y crearemos en su interior un Servidor Jenkins. Este será creado con los parámetros almacenados en terraform S3 backend y configurado mediante Ansible.
 
-Este despliegue esta alineado con las buenas practicas de seguridad.
+Este despliegue está alineado con las buenas prácticas de seguridad.
 
 - En la infraestuctura core crearemos:
 
   - La infraestructura con modulos de terrafom (VPC - Security Groups - Internet Gateway - Subnet - Route Table).
-  - El key_pairs para acceder a las instancias que creemos y su amacenamiento mediante el servicio AWS Secret Manager. (este servicio no es gratuito)
-  - Creación de Backed S3 donde almacenamremos los parametros de la  Infraestructura  
+  - Las key_pairs para acceder a las instancias que creemos y su almacenamiento mediante el servicio AWS Secret Manager. (este servicio no es gratuito)
+  - Creación de Backed S3 donde almacenaremos los parámetros de la  Infraestructura  
 
 - En La creación desde terraform una instancia servidor Jenkins realizaremos:
 
-  - La Creación de  una instancia  dentro la infraestructura core ya creada con los parametros almacenados en el Backend.
-  - Utilizaremos la funcion data de Terrafom para obtener la ultima imagen de ubuntu disponible en nuestra region de AWS.
-  - Alamcenaremos la ip publica en un S3 backend la instancia para luego untilizarla con Ansible.
+  - La Creación de  una instancia  dentro la infraestructura core ya creada con los parámetros almacenados en el Backend.
+  - Utilizaremos la función data de Terrafom para obtener la última imagen de ubuntu disponible en nuestra región de AWS.
+  - Almacenaremos la ip publica en un S3 backend la instancia para luego utilizarla con Ansible.
 
 - En la configuración del servidor de Jenkins mediante Ansible realizaremos:
 
- - Obtenderemos la ip pubica de nuestra instancia desde el s3 backend
- - Configurarenmos esta ip en el archivo hosts de Ansible
+ - Obtendremos la ip púbica de nuestra instancia desde el s3 backend
+ - Configuraremos esta ip en el archivo hosts de Ansible
  - Con Ansible instalaremos en nuestra instancia:
-    - Paquetes basicos
+    - Paquetes básicos
     - Jenkins
     - Docker
+
 
 ## Pre-requisitos 📋
 
@@ -47,12 +48,12 @@ En la carpeta 01_Deploy_Basic_infra tendremos el código para crear la infraestr
  En La carpeta 02_EC2_Jenkins tendremos el código para crear la instancia EC2, este permitirá:
 
  - Crear la Instancia EC2 con la información almacenada en el Backed de S3.
- - Utilizar el recurso data terraform_remote_state para otener la ultima AMI ubuntu disponible en la region de Aws
+ - Utilizar el recurso data terraform_remote_state para otener la ultima AMI ubuntu disponible en la región de Aws
  - Crear el output Public Ip y lo almacenamos en el Backend de la instancia.
 
  En La carpeta data 03_Configure_Basic_infra tendremos el código Ansible para Configurar el Jenkins Server:
 
- - En la carpeta Output_ip tenderemos el codigo terraform para otener la ip publica de la instancia creada para el Jenkins Server
+ - En la carpeta Output_ip tendremos el código terraform para obtener la ip pública de la instancia creada para el Jenkins Server
  - En la Carpeta Ansible tendremos el playbook y el rol y las tareas para configurar el servidor.
 
 ### Descripción del Código (partes principales):
@@ -75,7 +76,7 @@ terraform {
 
 ##### AWS Secret Manager
 
-Con el recurso aws_secretsmanager_secret en el modulo ssh_keys Creamos el Secrets en el servicio de AWS Secret Manager. El código es el siguiente:
+Con el recurso aws_secretsmanager_secret en el modulo ssh_keys creamos el Secrets en el servicio de AWS Secret Manager. El código es el siguiente:
 
 ```
 resource "aws_secretsmanager_secret" "ec2-secret-key-c" {
@@ -101,7 +102,7 @@ resource "aws_secretsmanager_secret_version" "secret_priv" {
 
 ##### Terraform remote state (carpeta 02_EC2_Jenkins)
 
-El data Terraform remote state nos permite extraer los outputs grabados en el útltimo snapshot  del  remote backend.
+El data Terraform remote state nos permite extraer los outputs grabados  del  remote backend.
 
 ```
 
@@ -114,7 +115,7 @@ data "terraform_remote_state" "if_trs" {
   }
 }
 ```
-El recurso data nos permite extraer el Ami de la untima imagen de ubuntu de nuestra region
+El recurso data nos permite extraer el Ami de la última imagen de ubuntu de nuestra región
 
 ```
 data "aws_ami" "lubuntu" {
@@ -149,7 +150,7 @@ resource "aws_instance" "ec2" {
 }
 ```
 
-Creams el back end para almacenar los datos de la instancia
+Creams el backend para almacenar los datos de la instancia
 
 ```
 terraform {
@@ -186,7 +187,6 @@ terraform {
 6) Ejecutamos terrafom apply para que realice el despliegue.
 7) Verificamos que realice los outputs.
 8) Vamos a muestra cuenta de AWS para verificar que se haya realizado el despliegue
-9) Vamos al AWS Secret Manager para verificar que creo el secret y lo cargo.
 
 #### Despliege de la Instancia.
 
@@ -214,11 +214,11 @@ echo "[jenkins_server]" > /etc/ansible/hosts
 Para configurar el achivo hosts
 
 ```
-terraform output pub_ip >> /etc/ansible/hosts
+terraform output public_ip >> /etc/ansible/hosts
 ```
 Para incluir la ip de la instancia en el archivo hosts
 
-Con el Aws cli extraemos la clave del Secret en la carpeta 03_Configure_Basic_infra/Ansible
+En la carpeta 03_Configure_Basic_infra/Ansible, Con el Aws cli extraemos la clave del Secret Manager
 
 ```
 aws secretsmanager get-secret-value --secret-id "ec2-key-c" --region "us-east-2" --query 'SecretString' --output text > key.pem
@@ -229,8 +229,8 @@ Le asignamos permisos
 ```
 chmod 400 key.pem
 ```
-Ejecumos el playbook
+Ejectamos el playbook
 
 ```
-/home/ubuntu/Module_Basics_2/Configure_Basic_infra# ansible-playbook Ansible/playbook.yml -u ubuntu --key-file key.pem
+ ansible-playbook Ansible/playbook.yml -u ubuntu --key-file key.pem
 ```
