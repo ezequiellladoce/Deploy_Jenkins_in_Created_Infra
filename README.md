@@ -1,4 +1,4 @@
-# Despliegue  Jenkins dentro de  Infraestructura Core usando Terrafom Modules, Terraform S3 backend y  AWS Secrets Manager y Ansible
+# Despliegue  Jenkins Server en  Infraestructura de Red Core
 
 En este repositorio veremos  como desplegar automatizar y securizar el despliegue de una infraestructura core (VPC - Security Groups - Internet Gateway - Subnet - Route Table) mediante  módulos Terrafom y crearemos en su interior un Servidor Jenkins. Este será creado con los parámetros almacenados en terraform S3 backend y configurado mediante Ansible.
 
@@ -7,7 +7,7 @@ Este despliegue está alineado con las buenas prácticas de seguridad.
 - En la infraestuctura core crearemos:
 
   - La infraestructura con modulos de terrafom (VPC - Security Groups - Internet Gateway - Subnet - Route Table).
-  - Las key_pairs para acceder a las instancias que creemos y su almacenamiento mediante el servicio AWS Secret Manager. (este servicio no es gratuito)
+  - Las key_pairs para acceder a las instancias que creemos y su almacenamiento mediante el servicio AWS Secret Manager.
   - Creación de Backed S3 donde almacenaremos los parámetros de la  Infraestructura  
 
 - En La creación desde terraform una instancia servidor Jenkins realizaremos:
@@ -45,13 +45,13 @@ En la carpeta 01_Deploy_Basic_infra tendremos el código para crear la infraestr
  - Crear los outputs de los parámetros Subnet ID y Security Group ID
  - Guardar con la función Backend en S3 la información de la infraestructura creada.
 
- En La carpeta 02_EC2_Jenkins tendremos el código para crear la instancia EC2, este permitirá:
+ En la carpeta 02_EC2_Jenkins tendremos el código para crear la instancia EC2, este permitirá:
 
  - Crear la Instancia EC2 con la información almacenada en el Backed de S3.
  - Utilizar el recurso data terraform_remote_state para otener la ultima AMI ubuntu disponible en la región de Aws
  - Crear el output Public Ip y lo almacenamos en el Backend de la instancia.
 
- En La carpeta data 03_Configure_Basic_infra tendremos el código Ansible para Configurar el Jenkins Server:
+ En la carpeta data 03_Configure_Basic_infra tendremos el código Ansible para Configurar el Jenkins Server:
 
  - En la carpeta Output_ip tendremos el código terraform para obtener la ip pública de la instancia creada para el Jenkins Server
  - En la Carpeta Ansible tendremos el playbook y el rol y las tareas para configurar el servidor.
